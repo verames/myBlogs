@@ -174,6 +174,7 @@ body::after {
     }
 
     .folder-tab:not(.active) {
+        align-self: flex-end;
         width: auto;
         min-width: 44px;
         max-width: 52px;
@@ -183,7 +184,7 @@ body::after {
         gap: 4px;
         justify-content: center;
         font-size: 0.7rem;
-        transform: translateX(-4px);
+        transform: translateX(0);
     }
 
     .folder-tab:not(.active) .folder-label-full {
@@ -202,7 +203,7 @@ body::after {
     }
 
     .folder-tab:not(.active):hover {
-        transform: translateX(-10px);
+        transform: translateX(-8px);
     }
 
     .folder-tab.active {
