@@ -233,6 +233,66 @@ body::after {
     .folder-tab.active:hover {
         transform: translateX(-20px);
     }
+
+    /* Keep desk content clear of the floating folder rail */
+    .main-desk {
+        padding: 14px 16px;
+        padding-right: clamp(5.5rem, 30vw, 13rem);
+    }
+
+    .desk-heading {
+        color: #fff;
+        font-family: 'Special Elite', cursive;
+        margin-left: 10px;
+        margin-bottom: 6px;
+        font-size: clamp(1rem, 3.5vw, 1.35rem);
+    }
+
+    .file-list {
+        grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+        gap: 12px;
+        padding: 12px 8px 12px 4px;
+    }
+
+    .file-card {
+        height: 128px;
+        padding: 10px 10px 12px;
+    }
+
+    .file-card:nth-child(even),
+    .file-card:nth-child(odd) {
+        transform: rotate(0.6deg);
+    }
+
+    .file-card h4 {
+        font-size: 0.92rem;
+        line-height: 1.2;
+    }
+
+    .about-me-note {
+        max-width: 100%;
+        width: auto;
+        box-sizing: border-box;
+        margin: 10px 0 14px 0;
+        padding: 22px 18px;
+        transform: rotate(-0.6deg);
+    }
+
+    .about-me-note::before {
+        width: 88px;
+        height: 28px;
+        top: -11px;
+    }
+
+    .about-me-note h1 {
+        font-size: 1.35rem;
+        margin-bottom: 10px;
+    }
+
+    .about-me-intro {
+        font-size: 1.02rem;
+        line-height: 1.55;
+    }
 }
 
 @media (max-width: 480px) {
@@ -261,6 +321,48 @@ body::after {
         width: 15px;
         height: 15px;
     }
+
+    .main-desk {
+        padding-right: clamp(4.75rem, 36vw, 11rem);
+        padding-left: 10px;
+    }
+
+    .desk-heading {
+        margin-left: 6px;
+        font-size: 0.95rem;
+    }
+
+    .file-list {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+        padding: 10px 6px;
+    }
+
+    .file-card {
+        height: 112px;
+        padding: 8px;
+    }
+
+    .file-card h4 {
+        font-size: 0.8rem;
+    }
+
+    .about-me-note {
+        max-width: 100%;
+        width: auto;
+        box-sizing: border-box;
+        margin: 8px 0 12px 0;
+        padding: 16px 14px;
+    }
+
+    .about-me-note h1 {
+        font-size: 1.15rem;
+    }
+
+    .about-me-intro {
+        font-size: 0.92rem;
+        line-height: 1.5;
+    }
 }
 
 /* Internal Folder Area */
@@ -274,6 +376,14 @@ body::after {
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.desk-heading {
+    color: #fff;
+    font-family: 'Special Elite', cursive;
+    margin-left: 20px;
+    margin-top: 0;
+    font-size: 1.5rem;
 }
 
 .file-list {
@@ -429,6 +539,12 @@ body::after {
     border-bottom: 2px solid rgba(67, 63, 54, 0.2);
     display: inline-block;
     margin-bottom: 15px;
+}
+
+.about-me-intro {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 0;
 }
 
 #secret-admin-trigger {

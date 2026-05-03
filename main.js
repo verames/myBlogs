@@ -66,13 +66,13 @@ function renderMainArea(category) {
         desk.innerHTML = `
             <div class="about-me-note">
                 <h1>Introduction</h1>
-                <p style="font-size: 1.2rem; line-height: 1.6;">${blogData.about}</p>
+                <p class="about-me-intro">${blogData.about}</p>
             </div>
         `;
     } else {
         const items = blogData[category] || [];
         desk.innerHTML = `
-            <h2 style="color: #fff; font-family: 'Special Elite'; margin-left: 20px;">${category.toUpperCase()}</h2>
+            <h2 class="desk-heading">${category.toUpperCase()}</h2>
             <div class="file-list">
                 ${items.map((item, index) => `
                     <div class="file-card" data-index="${index}" data-cat="${category}">
