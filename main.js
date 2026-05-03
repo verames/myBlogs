@@ -114,10 +114,16 @@ function setupEventListeners() {
             return;
         }
 
-        // Close paper (×, paper shell, or brown backdrop — not inner .paper-content)
+        const appEl = document.getElementById('app');
+        // Click empty desk area around the paper (body shows through) — same as old backdrop close
+        if (e.target === appEl && appEl.classList.contains('paper-open')) {
+            closePaper();
+            return;
+        }
+
+        // Close paper (× or paper shell — not inner .paper-content)
         if (
             e.target.id === 'close-paper' ||
-            e.target.id === 'paper-backdrop' ||
             e.target.classList.contains('paper-overlay')
         ) {
             closePaper();
