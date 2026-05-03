@@ -67,6 +67,60 @@ body::after {
     transform: rotate(-10deg);
 }
 
+/* Warm fixed lantern (left, ~27% from top) — glow + blend so flat black reads as ambience */
+.ambient-lantern {
+    position: fixed;
+    left: clamp(0.25rem, 1.25vw, 1rem);
+    top: 27%;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+    width: clamp(76px, 11vw, 132px);
+}
+
+.ambient-lantern__glow {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: 220%;
+    height: 160%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse 48% 42% at 50% 44%,
+            rgba(255, 220, 160, 0.55) 0%,
+            rgba(255, 160, 80, 0.28) 38%,
+            rgba(200, 90, 40, 0.08) 58%,
+            transparent 72%);
+    filter: blur(22px);
+    z-index: 0;
+    opacity: 0.95;
+}
+
+.ambient-lantern__img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    mix-blend-mode: screen;
+    filter: sepia(0.42) saturate(1.38) brightness(1.1) contrast(1.03)
+        drop-shadow(0 0 10px rgba(255, 200, 120, 0.55))
+        drop-shadow(0 0 26px rgba(255, 130, 60, 0.35));
+    opacity: 0.97;
+}
+
+@media (max-width: 640px) {
+    .ambient-lantern {
+        width: clamp(52px, 18vw, 88px);
+        left: 0.15rem;
+        top: 26%;
+    }
+
+    .ambient-lantern__glow {
+        filter: blur(16px);
+        opacity: 0.85;
+    }
+}
+
 #app {
     width: 90vw;
     max-width: 1400px;
