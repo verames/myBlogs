@@ -26,7 +26,7 @@ async function init() {
 
 async function loadContent() {
     try {
-        const response = await fetch('./data/content.json');
+        const response = await fetch('/data/content.json');
         return await response.json();
     } catch (error) {
         console.warn('Could not load content', error);
@@ -101,6 +101,7 @@ function setupEventListeners() {
             renderSidebar();
             renderMainArea(currentCategory);
             closePaper();
+            return;
         }
 
         // File cards
@@ -108,7 +109,9 @@ function setupEventListeners() {
         if (card) {
             const cat = card.dataset.cat;
             const index = card.dataset.index;
-            openPaper(blogData[cat][index]);
+            const item = blogData[cat]?.[index];
+            if (item) openPaper(item);
+            return;
         }
 
         // Close paper (×, paper shell, or brown backdrop — not inner .paper-content)
@@ -118,11 +121,18 @@ function setupEventListeners() {
             e.target.classList.contains('paper-overlay')
         ) {
             closePaper();
+            return;
         }
 
         // Admin actions
-        if (e.target.id === 'close-admin' || e.target.id === 'close-admin-top') toggleAdmin(false);
-        if (e.target.id === 'save-data-btn') downloadJSON();
+        if (e.target.id === 'close-admin' || e.target.id === 'close-admin-top') {
+            toggleAdmin(false);
+            return;
+        }
+        if (e.target.id === 'save-data-btn') {
+            downloadJSON();
+            return;
+        }
 
         if (e.target.classList.contains('admin-delete-btn')) {
             const catArr = e.target.dataset.cat;
