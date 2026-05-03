@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retro Shelf Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Special+Elite&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div class="bg-decoration dec-1"></div>
+  <div class="bg-decoration dec-2"></div>
+  <div id="app">
+    <div class="main-desk">
+      <!-- Content/File-list will be injected here -->
+    </div>
+
+    <div class="sidebar">
+      <!-- Vertical folders will be injected here -->
+    </div>
+
+    <!-- Paper Overlay for reading -->
+    <div class="paper-overlay" id="paper-overlay">
+      <span class="close-paper" id="close-paper">&times;</span>
+      <div class="paper-content">
+        <!-- Full content here -->
+      </div>
+    </div>
+
+    <!-- Admin Overlay -->
+    <div class="admin-overlay" id="admin-overlay" style="display: none;">
+      <div class="admin-panel" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="admin-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 style="font-family: 'Special Elite'; margin:0;">Admin Dashboard</h2>
+          <button id="close-admin-top" class="admin-btn"
+            style="background:#888; font-size: 20px; padding: 5px 15px;">&times;</button>
+        </div>
+        <div id="admin-editor" style="flex:1; overflow:hidden; display:flex; flex-direction:column;"></div>
+        <div class="admin-controls"
+          style="margin-top: 20px; padding-top: 15px; border-top: 2px solid var(--folder-olive);">
+          <button id="save-data-btn" class="admin-btn">Download Updated JSON</button>
+          <button id="close-admin" class="admin-btn" style="background: #888;">Close Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>

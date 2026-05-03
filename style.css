@@ -1,0 +1,428 @@
+:root {
+    --folder-olive: #353d28;
+    --folder-orange: #433f36;
+    --folder-slate: #363e42;
+    --folder-gold: #695f47;
+    --folder-indigo: #48504f;
+    --manila: #e5d3b3;
+    --paper-cream: #d6c0af;
+    --ink: #2c2c2c;
+    --brass: #c5a059;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4efea;
+    background-image: url("/assets/botanical_bg.png");
+    background-size: 600px 600px;
+    background-repeat: repeat;
+    font-family: 'EB Garamond', serif;
+    color: var(--ink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.1) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Background Decoration */
+.bg-decoration {
+    position: fixed;
+    z-index: 0;
+    pointer-events: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
+
+.dec-1 {
+    top: -50px;
+    left: -50px;
+    width: 400px;
+    height: 400px;
+    background-image: url("/assets/corner_botanical.png");
+    transform: rotate(5deg);
+}
+
+.dec-2 {
+    bottom: -20px;
+    right: 20px;
+    width: 300px;
+    height: 300px;
+    background-image: url("/assets/label_botanical.png");
+    transform: rotate(-10deg);
+}
+
+#app {
+    width: 90vw;
+    max-width: 1400px;
+    height: 85vh;
+    background: #b09a8a;
+    /* Desk wood */
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 0 100px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 10;
+    border-radius: 15px;
+    padding: 40px;
+    display: flex;
+    box-sizing: border-box;
+    margin: 20px;
+}
+
+/* Shelf/Sidebar */
+.sidebar {
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.folder-tab {
+    width: 150px;
+    height: 45px;
+    background: var(--folder-color, #888);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 100% 2px;
+    border-radius: 4px 15px 15px 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    gap: 10px;
+    color: #fff;
+    font-family: 'Special Elite', cursive;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateX(-5px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.folder-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.folder-label {
+    letter-spacing: 0.5px;
+}
+
+.folder-tab:hover {
+    transform: translateX(-30px);
+}
+
+.folder-tab.active {
+    transform: translateX(-50px);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Internal Folder Area */
+.main-desk {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.file-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Generic File Tab Look */
+.file-card {
+    background: var(--manila);
+    background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+    height: 180px;
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.file-card:nth-child(even) {
+    transform: rotate(2deg);
+    background: #e9dbc0;
+}
+
+.file-card:nth-child(odd) {
+    transform: rotate(-1.5deg);
+    background: #dfd4b8;
+}
+
+.file-card::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px dashed rgba(0, 0, 0, 0.05);
+    pointer-events: none;
+}
+
+.file-card:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.file-card h4 {
+    margin: 0;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.3rem;
+    color: #444;
+}
+
+/* Open Paper View */
+.paper-overlay {
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    height: 90%;
+    background: var(--paper-cream);
+    background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+    /* Subtle paper texture */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    padding: 60px;
+    box-sizing: border-box;
+    display: none;
+    z-index: 100;
+    overflow-y: auto;
+    transform: rotate(1deg);
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    /* Torn paper effect */
+    clip-path: polygon(0% 2%, 5% 0%, 10% 3%, 15% 1%, 20% 4%, 25% 1%, 30% 3%, 35% 1%, 40% 4%, 45% 2%, 50% 5%, 55% 2%, 60% 4%, 65% 1%, 70% 3%, 75% 1%, 80% 4%, 85% 1%, 90% 3%, 95% 1%, 100% 4%,
+            100% 100%, 0% 100%);
+}
+
+.paper-overlay.active {
+    display: block;
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.paper-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.05) 50%);
+}
+
+.paper-content h1 {
+    font-family: 'Special Elite', cursive;
+    border-bottom: 2px solid #fce4d5;
+    margin-bottom: 20px;
+}
+
+.paper-content p {
+    line-height: 1.8;
+    font-size: 1.25rem;
+    white-space: pre-wrap;
+}
+
+.close-paper {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #888;
+}
+
+/* About Me pinned look */
+.about-me-note {
+    background: #ffecdb;
+    background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+    padding: 40px;
+    max-width: 700px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
+    transform: rotate(-1.5deg);
+    position: relative;
+    align-self: flex-start;
+    margin: 40px;
+}
+
+/* Tape effect */
+.about-me-note::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    width: 120px;
+    height: 35px;
+    background: rgba(220, 200, 180, 0.4);
+    box-shadow: inset -1px -1px 2px rgba(255, 255, 255, 0.2), inset 1px 1px 2px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    z-index: 2;
+}
+
+.about-me-note h1 {
+    font-family: 'Special Elite', cursive;
+    color: #433f36;
+    border-bottom: 2px solid rgba(67, 63, 54, 0.2);
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+#secret-admin-trigger {
+    display: none;
+}
+
+/* Admin Dashboard */
+.admin-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85vw;
+    height: 85vh;
+    max-height: 800px;
+    background: #f4efea;
+    background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+    z-index: 1000;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    color: #333;
+    border: 2px solid var(--folder-olive);
+}
+
+.admin-header {
+    border-bottom: 2px solid var(--folder-olive);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+#admin-editor {
+    flex: 1;
+    overflow: hidden;
+    /* Editor container itself doesn't scroll */
+    background: rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-right: 10px;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+.admin-btn {
+    padding: 10px 20px;
+    font-family: 'Special Elite', cursive;
+    background: var(--brass);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.admin-add-btn {
+    background: #556b2f;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Special Elite', cursive;
+    margin-bottom: 15px;
+}
+
+.admin-section {
+    margin-bottom: 30px;
+}
+
+.admin-item-row {
+    background: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-delete-btn {
+    background: #a04040;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.admin-input-group {
+    margin-bottom: 15px;
+}
+
+.admin-input-group label {
+    display: block;
+    font-family: 'Special Elite', cursive;
+    margin-bottom: 5px;
+}
+
+.admin-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'EB Garamond', serif;
+}
+
+textarea.admin-input {
+    min-height: 100px;
+}
