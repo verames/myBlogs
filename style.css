@@ -81,6 +81,41 @@ body::after {
     display: flex;
     box-sizing: border-box;
     margin: 20px;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Full-area brown stage while reading a note */
+.paper-backdrop {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 50;
+    background: linear-gradient(165deg, #5c4336 0%, #3d2a1f 42%, #2a1a12 100%);
+    box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+#app.paper-open .paper-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#app.paper-open .main-desk,
+#app.paper-open .sidebar {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s ease, visibility 0.35s;
+}
+
+.main-desk,
+.sidebar {
+    transition: opacity 0.35s ease, visibility 0.35s;
 }
 
 /* Shelf/Sidebar */
@@ -212,6 +247,7 @@ body::after {
     left: 10%;
     width: 80%;
     height: 90%;
+    z-index: 100;
     background: var(--paper-cream);
     background-image: url("https://www.transparenttextures.com/patterns/felt.png");
     /* Subtle paper texture */
@@ -219,7 +255,6 @@ body::after {
     padding: 60px;
     box-sizing: border-box;
     display: none;
-    z-index: 100;
     overflow-y: auto;
     transform: rotate(1deg);
     transition: transform 0.4s ease, opacity 0.4s ease;

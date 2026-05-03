@@ -14,6 +14,8 @@ let currentCategory = 'about';
 let loginAttempts = 0;
 let aboutClickCount = 0;
 let aboutClickTimeout = null;
+/** Cleared on each closePaper so rapid Escape/clicks cannot leave UI stuck */
+let paperCloseTimeoutId = null;
 
 async function init() {
     blogData = await loadContent();
@@ -109,8 +111,12 @@ function setupEventListeners() {
             openPaper(blogData[cat][index]);
         }
 
-        // Close paper
-        if (e.target.id === 'close-paper' || e.target.classList.contains('paper-overlay')) {
+        // Close paper (×, paper shell, or brown backdrop — not inner .paper-content)
+        if (
+            e.target.id === 'close-paper' ||
+            e.target.id === 'paper-backdrop' ||
+            e.target.classList.contains('paper-overlay')
+        ) {
             closePaper();
         }
 
@@ -234,6 +240,10 @@ function downloadJSON() {
 function openPaper(item) {
     const overlay = document.getElementById('paper-overlay');
     const content = document.querySelector('.paper-content');
+    if (paperCloseTimeoutId !== null) {
+        clearTimeout(paperCloseTimeoutId);
+        paperCloseTimeoutId = null;
+    }
 
     content.innerHTML = `
         <h1>${item.title}</h1>
@@ -243,14 +253,27 @@ function openPaper(item) {
         </div>
     `;
 
+    const app = document.getElementById('app');
+    app.classList.add('paper-open');
     overlay.style.display = 'block';
     setTimeout(() => overlay.classList.add('active'), 10);
 }
 
 function closePaper() {
     const overlay = document.getElementById('paper-overlay');
+    const app = document.getElementById('app');
+    if (!app.classList.contains('paper-open')) return;
+
     overlay.classList.remove('active');
-    setTimeout(() => overlay.style.display = 'none', 400);
+    if (paperCloseTimeoutId !== null) {
+        clearTimeout(paperCloseTimeoutId);
+        paperCloseTimeoutId = null;
+    }
+    paperCloseTimeoutId = setTimeout(() => {
+        paperCloseTimeoutId = null;
+        overlay.style.display = 'none';
+        app.classList.remove('paper-open');
+    }, 400);
 }
 
 init();
