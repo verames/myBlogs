@@ -156,6 +156,113 @@ body::after {
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
+.folder-label-compact {
+    display: none;
+}
+
+/* Tablet and below: compact rail — icon + initial; active tab stays full label */
+@media (max-width: 1024px) {
+    #app {
+        padding: 16px;
+        margin: 12px;
+    }
+
+    .sidebar {
+        right: 8px;
+        top: 36px;
+        gap: 6px;
+    }
+
+    .folder-tab:not(.active) {
+        width: auto;
+        min-width: 44px;
+        max-width: 52px;
+        height: 38px;
+        padding-left: 8px;
+        padding-right: 8px;
+        gap: 4px;
+        justify-content: center;
+        font-size: 0.7rem;
+        transform: translateX(-4px);
+    }
+
+    .folder-tab:not(.active) .folder-label-full {
+        display: none;
+    }
+
+    .folder-tab:not(.active) .folder-label-compact {
+        display: inline;
+        letter-spacing: 0;
+        line-height: 1;
+    }
+
+    .folder-tab:not(.active) .folder-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .folder-tab:not(.active):hover {
+        transform: translateX(-10px);
+    }
+
+    .folder-tab.active {
+        width: auto;
+        min-width: 118px;
+        max-width: min(42vw, 200px);
+        height: 44px;
+        padding-left: 12px;
+        padding-right: 14px;
+        gap: 8px;
+        font-size: 0.75rem;
+        transform: translateX(-16px);
+    }
+
+    .folder-tab.active .folder-label-compact {
+        display: none;
+    }
+
+    .folder-tab.active .folder-label-full {
+        display: inline;
+    }
+
+    .folder-tab.active .folder-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .folder-tab.active:hover {
+        transform: translateX(-20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .folder-tab:not(.active) {
+        min-width: 40px;
+        max-width: 46px;
+        height: 36px;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .folder-tab:not(.active) .folder-icon svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .folder-tab.active {
+        min-width: 100px;
+        max-width: min(55vw, 180px);
+        font-size: 0.68rem;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .folder-tab.active .folder-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+}
+
 /* Internal Folder Area */
 .main-desk {
     flex: 1;

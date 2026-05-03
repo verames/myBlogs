@@ -39,14 +39,24 @@ async function loadContent() {
 
 function renderSidebar() {
     const sidebar = document.querySelector('.sidebar');
-    sidebar.innerHTML = categories.map(cat => `
-        <div class="folder-tab ${cat.id === currentCategory ? 'active' : ''}" 
-             data-category="${cat.id}" 
-             style="--folder-color: ${cat.color}">
-            <span class="folder-icon">${cat.icon}</span>
-            <span class="folder-label">${cat.label}</span>
-        </div>
-    `).join('');
+    sidebar.innerHTML = categories.map((cat) => {
+        const isActive = cat.id === currentCategory;
+        const initial = cat.label.trim().charAt(0);
+        const ariaCurrent = isActive ? ' aria-current="page"' : '';
+        return `
+        <div class="folder-tab ${isActive ? 'active' : ''}"
+             data-category="${cat.id}"
+             style="--folder-color: ${cat.color}"
+             role="button"
+             tabindex="0"
+             aria-label="${cat.label}"${ariaCurrent}>
+            <span class="folder-icon" aria-hidden="true">${cat.icon}</span>
+            <span class="folder-label">
+                <span class="folder-label-full">${cat.label}</span>
+                <span class="folder-label-compact">${initial}</span>
+            </span>
+        </div>`;
+    }).join('');
 }
 
 function renderMainArea(category) {
@@ -153,6 +163,12 @@ function setupEventListeners() {
         if (e.key === 'Escape') {
             closePaper();
             toggleAdmin(false);
+            return;
+        }
+        const tabFocus = e.target.closest?.('.folder-tab');
+        if (tabFocus && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            tabFocus.click();
         }
     });
 }
