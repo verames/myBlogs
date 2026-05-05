@@ -24,6 +24,78 @@ async function init() {
     renderSidebar();
     renderMainArea('about');
     setupEventListeners();
+    checkGithubConfig();
+}
+
+let githubConfig = {
+    token: localStorage.getItem('gh_token') || '',
+    owner: 'verames',
+    repo: 'myBlogs',
+    path: 'public/data/content.json'
+};
+
+function checkGithubConfig() {
+    if (!githubConfig.token) {
+        console.warn('GitHub Token not found. Sync will be disabled until configured in Admin panel.');
+    }
+}
+
+async function syncToGithub() {
+    if (!githubConfig.token) {
+        const token = prompt("Please enter your GitHub Personal Access Token (with repo/contents write access):");
+        if (!token) return;
+        githubConfig.token = token;
+        localStorage.setItem('gh_token', token);
+    }
+
+    const btn = document.getElementById('sync-github-btn');
+    const originalText = btn.innerText;
+    btn.innerText = 'Syncing...';
+    btn.disabled = true;
+
+    try {
+        // 1. Get the current file SHA (needed for update)
+        const url = `https://api.github.com/repos/${githubConfig.owner}/${githubConfig.repo}/contents/${githubConfig.path}`;
+        const getRes = await fetch(url, {
+            headers: { 'Authorization': `token ${githubConfig.token}` }
+        });
+
+        if (!getRes.ok) throw new Error('Failed to get file info from GitHub. Check your token/permissions.');
+        const fileData = await getRes.json();
+        const sha = fileData.sha;
+
+        // 2. Push the updated content
+        const putRes = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${githubConfig.token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: `Update content.json via admin panel [${new Date().toLocaleString()}]`,
+                content: btoa(unescape(encodeURIComponent(JSON.stringify(blogData, null, 2)))),
+                sha: sha
+            })
+        });
+
+        if (!putRes.ok) {
+            const error = await putRes.json();
+            throw new Error(error.message || 'Failed to update file.');
+        }
+
+        alert('Success! Changes pushed to GitHub. The site will update in a minute or two.');
+    } catch (err) {
+        console.error(err);
+        alert('Error syncing to GitHub: ' + err.message);
+        // If it's a 401, maybe the token is bad
+        if (err.message.includes('401') || err.message.includes('Bad credentials')) {
+            localStorage.removeItem('gh_token');
+            githubConfig.token = '';
+        }
+    } finally {
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
 }
 
 async function loadContent() {
@@ -151,6 +223,18 @@ function setupEventListeners() {
             downloadJSON();
             return;
         }
+        if (e.target.id === 'sync-github-btn') {
+            syncToGithub();
+            return;
+        }
+        if (e.target.id === 'clear-token-btn') {
+            if (confirm('Clear GitHub Token? You will need to re-enter it to sync.')) {
+                localStorage.removeItem('gh_token');
+                githubConfig.token = '';
+                alert('Token cleared.');
+            }
+            return;
+        }
 
         if (e.target.classList.contains('admin-delete-btn')) {
             const catArr = e.target.dataset.cat;
@@ -233,6 +317,18 @@ function renderAdminPanel() {
     });
 
     html += `</div>`; // Close admin-scroll-area
+    html += `
+        <div style="padding: 15px; border-top: 1px solid #ddd; background: #f9f9f9; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; gap: 10px;">
+                <button id="sync-github-btn" class="admin-btn" style="background: #27ae60; flex: 1;">🚀 Sync to GitHub</button>
+                <button id="save-data-btn" class="admin-btn" style="background: #2c3e50;">Download Backup</button>
+            </div>
+            <div style="font-size: 0.8em; color: #666; display: flex; justify-content: space-between; align-items: center;">
+                <span>Token saved locally: ${githubConfig.token ? '✅ Yes' : '❌ No'}</span>
+                <button id="clear-token-btn" style="background:none; border:none; color:#e74c3c; cursor:pointer; text-decoration:underline; font-size: inherit;">Clear Token</button>
+            </div>
+        </div>
+    `;
     editor.innerHTML = html;
 }
 
