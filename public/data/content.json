@@ -1,42 +1,42 @@
 {
-    "about": "Welcome to my shelf. I've been collecting thoughts, stories, and sketches for years. This space is digital, but I wanted it to feel like the physical file shelves I grew up with—simple, organized, and slowly growing. Feel free to browse through the folders on the right.",
-    "essays": [
-        {
-            "id": 1,
-            "title": "The Art of Slow Living",
-            "date": "Oct 12, 2023",
-            "content": "In a world that never stops moving, there is a profound power in standing perfectly still. This essay explores how silence can be a form of resistance..."
-        }
-    ],
-    "journal": [
-        {
-            "id": 1,
-            "title": "A Rainy Tuesday in Winter",
-            "date": "Nov 1, 2023",
-            "content": "The rain hasn't stopped since morning. It's the kind of day where the tea never stays hot long enough and the ink flows a bit slower on the page."
-        }
-    ],
-    "stories": [
-        {
-            "id": 1,
-            "title": "The Weaver of Mist",
-            "content": "High above the valley, where the air grows thin and cold, lived a woman who could weave the morning mist into threads of silver..."
-        }
-    ],
-    "books": [
-        {
-            "id": 1,
-            "title": "Meditations",
-            "author": "Marcus Aurelius",
-            "review": "A timeless collection of thoughts on virtue, mortality, and the human condition. It remains my most-referenced book."
-        }
-    ],
-    "paintings": [
-        {
-            "id": 1,
-            "title": "Blue Ridge Twilight",
-            "year": "2023",
-            "description": "An oil study of the darkening peaks at sunset. Focused on the transition from deep indigo to soft violet."
-        }
-    ]
+  "about": "Welcome to my shelf. I've been collecting thoughts, stories, and sketches for years. This space is digital, but I wanted it to feel like the physical file shelves I grew up with—simple, organized, and slowly growing. Feel free to browse through the folders on the right.",
+  "essays": [
+    {
+      "id": 1,
+      "title": "The Art of Slow Living",
+      "date": "Oct 12, 2023",
+      "content": "In a world that never stops moving, there is a profound power in standing perfectly still. This essay explores how silence can be a form of resistance..."
+    }
+  ],
+  "journal": [
+    {
+      "id": 1,
+      "title": "A Rainy Tuesday in Winter",
+      "date": "Nov 1, 2023",
+      "content": "The rain hasn't stopped since morning. It's the kind of day where the tea never stays hot long enough and the ink flows a bit slower on the page."
+    }
+  ],
+  "stories": [
+    {
+      "id": 1,
+      "title": "The Weaver of Mist",
+      "content": "High above the valley, where the air grows thin and cold, lived a woman who could weave the morning mist into threads of silver..."
+    }
+  ],
+  "books": [
+    {
+      "id": 1,
+      "title": "Meditations",
+      "author": "Marcus Aurelius",
+      "review": "A timeless collection of thoughts on virtue, mortality, and the human condition. It remains my most-referenced book."
+    }
+  ],
+  "paintings": [
+    {
+      "id": 1,
+      "title": "Blue Ridge Twilight",
+      "year": "2023",
+      "description": "An oil study of the darkening peaks at sunset. Focused on the transition from deep indigo to soft violet."
+    }
+  ]
 }
