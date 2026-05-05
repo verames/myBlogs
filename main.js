@@ -16,6 +16,8 @@ let aboutClickCount = 0;
 let aboutClickTimeout = null;
 /** Cleared on each closePaper so rapid Escape/clicks cannot leave UI stuck */
 let paperCloseTimeoutId = null;
+/** Lantern GIF reveal after paper overlay is visible */
+let lanternRevealTimeoutId = null;
 
 async function init() {
     blogData = await loadContent();
@@ -26,7 +28,7 @@ async function init() {
 
 async function loadContent() {
     try {
-        const response = await fetch('/data/content.json');
+        const response = await fetch(`${import.meta.env.BASE_URL}data/content.json`);
         return await response.json();
     } catch (error) {
         console.warn('Could not load content', error);
@@ -272,9 +274,14 @@ function downloadJSON() {
 function openPaper(item) {
     const overlay = document.getElementById('paper-overlay');
     const content = document.querySelector('.paper-content');
+    const lantern = document.getElementById('ambient-lantern');
     if (paperCloseTimeoutId !== null) {
         clearTimeout(paperCloseTimeoutId);
         paperCloseTimeoutId = null;
+    }
+    if (lanternRevealTimeoutId !== null) {
+        clearTimeout(lanternRevealTimeoutId);
+        lanternRevealTimeoutId = null;
     }
 
     content.innerHTML = `
@@ -288,13 +295,28 @@ function openPaper(item) {
     const app = document.getElementById('app');
     app.classList.add('paper-open');
     overlay.style.display = 'block';
+    if (lantern) lantern.classList.remove('ambient-lantern--lit');
     setTimeout(() => overlay.classList.add('active'), 10);
+    /* After paper fade-in (~0.4s), slowly reveal lantern + animated GIF */
+    lanternRevealTimeoutId = setTimeout(() => {
+        lanternRevealTimeoutId = null;
+        if (lantern) lantern.classList.add('ambient-lantern--lit');
+    }, 420);
 }
 
 function closePaper() {
     const overlay = document.getElementById('paper-overlay');
     const app = document.getElementById('app');
+    const lantern = document.getElementById('ambient-lantern');
     if (!app.classList.contains('paper-open')) return;
+
+    if (lanternRevealTimeoutId !== null) {
+        clearTimeout(lanternRevealTimeoutId);
+        lanternRevealTimeoutId = null;
+    }
+    if (lantern) {
+        lantern.classList.remove('ambient-lantern--lit');
+    }
 
     overlay.classList.remove('active');
     if (paperCloseTimeoutId !== null) {

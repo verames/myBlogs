@@ -17,10 +17,14 @@
 <body>
   <div class="bg-decoration dec-1"></div>
   <div class="bg-decoration dec-2"></div>
-  <div class="ambient-lantern" aria-hidden="true">
+  <div class="ambient-lantern" id="ambient-lantern" aria-hidden="true">
     <span class="ambient-lantern__glow"></span>
-    <img class="ambient-lantern__img" src="/assets/lantern-picmix.png" alt="" width="200" height="320"
-      decoding="async" />
+    <div class="ambient-lantern__stack">
+      <img class="ambient-lantern__img ambient-lantern__static" src="/assets/lantern-picmix.png" alt="" width="200"
+        height="320" decoding="async" />
+      <img class="ambient-lantern__img ambient-lantern__gif" src="/assets/picmix.com_2913439.gif" alt="" width="200"
+        height="320" decoding="async" />
+    </div>
   </div>
   <div id="app">
     <div class="main-desk">
